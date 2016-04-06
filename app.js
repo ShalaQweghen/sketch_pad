@@ -1,95 +1,109 @@
 $(document).ready(function() {
+	cover();
 	for (var i = 0; i < 255; i++) {
 		var clone = $("#grid").clone();
 		clone.appendTo($("#container"));
 	};
-	$("#container").on("mouseenter", "#grid", function() {
-	$(this).addClass("hovered");
+	$("#container #grid").hover(function() {
+		$(this).css("background-color", "blue");
 	});
-	function reset() {
-		$("#grid").removeClass();
-		$("#container div:first-child").addClass("keep");
+	var num, width, qnty;
+	function cover() {
+		$("#container").append("<div></div>");
+		$("#container div").attr({"id": "grid", "class": "grid"});
+	};
+	function clear() {
+		$("#container #grid").removeAttr("class");
+		$("#container #grid").attr("class", "grid");
+		$("#container #grid").css({"background-color": "", "opacity": "1"});
+	};
+	function default1() {
+		clear();
+		clear();
+		$("#container #grid").hover(function() {
+			$(this).css("background-color", "blue");
+		});
+	};
+	function set() {
+		$("#container #grid").removeAttr("style");
 		$(".grid").remove();
+		cover();
 		num = prompt("How many squares per side should the grid be?");
-		var width = 512/num;
+		width = 512/num;
 		width = width.toString();
-		$(".grid, .keep").css({"width": width, "height": width});
-		var adet = num*num;
-		for (var i = 0; i < adet; i++) {
+		$(".grid").css({"width": width, "height": width});
+		qnty = num*num;
+		for (var i = 0; i < qnty; i++) {
 			var quantity = $("#grid").clone();
 			quantity.appendTo($("#container"));
 		};
-		$("#container div").addClass("grid");
-		$("#container").on("mouseenter", "#grid", function() {
-			$(this).addClass("hovered");
+		$("#container #grid").removeAttr("class");
+		$("#container #grid").css("opacity", "1");
+		$("#container #grid").hover(function() {
+			$(this).css("background-color", "blue");
 		});
 	};
 	function random() {
-		$("#grid").removeClass();
+		clear();
+		$("#container #grid").removeAttr("class");
 		function get_random_color2() {
-    	var r = function () { return Math.floor(Math.random()*256) };
-    	return "rgb(" + r() + "," + r() + "," + r() + ")";
+    		var r = function () { return Math.floor(Math.random()*256) };
+    		return "rgb(" + r() + "," + r() + "," + r() + ")";
 		};
-		$("#container").on("mouseenter", "#grid", function() {
+		$("#container #grid").hover(function() {
 			var color = get_random_color2();
-			$(this).addClass("random");
 			$(this).css("background-color", color);
 		});
 	};
 	function opacity() {
-		$("#grid").removeClass();
-		$("#container").on("mouseenter", "#grid", function() {
-			$(this).addClass("opacity");
-		});
-		$("#container").on("mouseenter", ".opacity", function() {
-			$(this).addClass("opacity1");
-			$(this).removeClass("opacity");
-		});
-		$("#container").on("mouseenter", ".opacity1", function() {
-			$(this).addClass("opacity2");
-			$(this).removeClass("opacity1");
-		});
-		$("#container").on("mouseenter", ".opacity2", function() {
-			$(this).addClass("opacity3");
-			$(this).removeClass("opacity2");
-		});
-		$("#container").on("mouseenter", ".opacity3", function() {
-			$(this).addClass("opacity4");
-			$(this).removeClass("opacity3");
-		});
-		$("#container").on("mouseenter", ".opacity4", function() {
-			$(this).addClass("opacity5");
-			$(this).removeClass("opacity4");
-		});
-		$("#container").on("mouseenter", ".opacity5", function() {
-			$(this).addClass("opacity6");
-			$(this).removeClass("opacity5");
-		});
-		$("#container").on("mouseenter", ".opacity6", function() {
-			$(this).addClass("opacity7");
-			$(this).removeClass("opacity6");
-		});
-		$("#container").on("mouseenter", ".opacity7", function() {
-			$(this).addClass("opacity8");
-			$(this).removeClass("opacity7");
-		});
-		$("#container").on("mouseenter", ".opacity8", function() {
-			$(this).addClass("opacity9");
-			$(this).removeClass("opacity8");
-		});
-
+		clear();
+		$("#container #grid").removeAttr("class");
+		$("#container #grid").attr("class", "opacity");
+		if ($("#container #grid").hasClass("opacity")) {
+			$("#container").on("mouseenter", ".opacity", function holala3(){
+				switch ($(this).css("opacity")) {
+					case "0.2":
+						$(this).css("opacity", "0.4");
+						break;
+					case "0.4":
+						$(this).css("opacity", "0.6");
+						break;
+					case "0.6":
+						$(this).css("opacity", "0.8");
+						break;
+					case "0.8":
+						$(this).css("opacity", "1");
+						break;
+					case "1":
+						$(this).css("opacity", "0.2");
+						break;
+				};
+			});
+		}
+		else {
+			$("#container").off("mouseenter", ".opacity", holala3);
+		};
 	};
 	function trail() {
-		$("#grid").removeClass();
-		$("#container").on("mouseenter", "#grid", function() {
-			$(this).addClass("hovered");
-		});
-		$("#container").on("mouseleave", "#grid", function() {
-			$(this).animate({"opacity": "0"}, "slow");
-		});
+		clear();
+		$("#container #grid").attr("class", "trail");
+		if ($("#container #grid").hasClass("trail")) {
+			$("#container").on("mouseenter", ".trail", function holala() {
+				$(this).css("opacity", "1");
+			});
+			$("#container").on("mouseleave", ".trail", function holala2() {
+				$(this).animate({"opacity": "0"}, "fast");
+			});
+		} 
+		else {
+			$("#container").off("mouseenter", ".trail", holala);
+	
+			$("#container").off("mouseleave", ".trail", holala2);
+		};
 	};
-	$("#reset").on("click", reset);
-	$("#random").on("click", random);
+	$("#default").on("click", default1);
 	$("#opacity").on("click", opacity);
 	$("#trail").on("click", trail);
+	$("#random").on("click", random);
+	$("#reset").on("click", set);
 });

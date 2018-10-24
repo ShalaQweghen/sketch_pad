@@ -1,6 +1,15 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	background-color: black;
 }
+
+label {
+	color: white;
+}
+
 #reset {
 	display: block;
 	margin: 5px auto;
@@ -12,17 +21,16 @@ body {
 }
 #container {
 	font-size: 0;
-	width: 512px;
-	height: 512px;
+	width: 576px;
+	height: 576px;
 	margin: 10px auto;
-	border: 3px solid;
-	overflow: hidden;
-	background-color: white;
+	background-color: black;
 }
-#grid {
+.grid {
 	width: 32px;
 	height: 32px;
 	background-color: white;
 	display: inline-block;
 	opacity: 1;
+	border: 1px solid gray;
 }

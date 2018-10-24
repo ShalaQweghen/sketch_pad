@@ -4,9 +4,7 @@ $(document).ready(function() {
 		var clone = $("#grid").clone();
 		clone.appendTo($("#container"));
 	};
-	$("#container #grid").hover(function() {
-		$(this).css("background-color", "blue");
-	});
+	default1();
 	var num, width, qnty;
 	function cover() {
 		$("#container").append("<div></div>");
@@ -20,9 +18,17 @@ $(document).ready(function() {
 	function default1() {
 		clear();
 		clear();
-		$("#container #grid").hover(function() {
-			$(this).css("background-color", "blue");
+		$("#container #grid").mousedown(function() {
+			$("#container #grid").hover(function() {
+				$(this).css("background-color", "blue");
+			});
 		});
+
+		$("#container #grid").mouseup(function() {
+			$("#container #grid").hover(function() {
+				$(this).css("color", "white");
+			})
+		})
 	};
 	function set() {
 		$("#container #grid").removeAttr("style");
